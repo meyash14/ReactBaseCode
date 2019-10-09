@@ -3,7 +3,7 @@
 const app = {
         title:'Indecision App',
         subTitle:'Nothing',
-        options:['One','Two']
+        options:['One']
 }
 
 const template = (
