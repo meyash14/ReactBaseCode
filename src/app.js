@@ -1,45 +1,58 @@
+console.log('App.js is running!');
 
-//JSX- Java Script XML
 const app = {
-        title:'Indecision App',
-        subTitle:'Nothing',
-        options:['One']
+  title: 'Indecision App',
+  subtitle: 'Put your life in the hands of a computer',
+  options: []
+};
+
+const onFormSubmit = (e) => {
+  e.preventDefault();
+
+  const option = e.target.elements.option.value;
+
+  if (option) {
+    app.options.push(option);
+    e.target.elements.option.value = '';
+    render();
+  }
+};
+
+const onRemoveAll = () => {
+  app.options = [];
+  render();
+};
+
+const onMakeDecision = () => {
+    const randomNum = Math.floor(Math.random() * app.options.length)
+    const option = app.options[randomNum]
+    render()
+    
 }
 
-const template = (
-        <div>
-            <h1>{app.title}</h1>
-            {(app.subTitle) && <p>{app.subTitle}</p>}
-            <ol>
-                    {(app.options && app.options.length>0) && <li>Item {app.options[0]}</li>}
-                    {(app.options && app.options.length>0) && <li>Item {app.options[1]}</li>}
-            </ol>
-            {(app.options && app.options.length>0) && <p>{app.options}</p>}
-            {app.options.length>0?<p>Here are your options: {app.options}</p>:'No Options'}
-        </div>
+const appRoot = document.getElementById('app');
 
-)
-const user ={
-    name: 'Yash',
-    age : 17,
-    location: 'Delhi'
-}
-function getLocation(location)
-{
-    if(location)
-    {
-       // return location
-        return <p>Location: {location}</p>
-    }
-}
-const template2 = (
-        <div>
-        <h1>{user.name?user.name:'Annonymous'}</h1> {/*ternanry operator*/ }
-        {(user.age && user.age>=18)&& <p>{user.age}</p>} {/*logical and */}
-      { /* <p>{getLocation(user.location)}</p>  way to comment in jsx:*/}
-        {getLocation(user.location)}
-        </div>
-    )
-const appRoot = document.getElementById('app')
-ReactDOM.render(template,appRoot)
+const render = () => {
+  const template = (
+    <div>
+      <h1>{app.title}</h1>
+      {app.subtitle && <p>{app.subtitle}</p>}
+      <p>{app.options.length > 0 ? 'Here are your options' : 'No options'}</p>
+      <button disabled={app.options.length>0 ?false:true} onClick={onMakeDecision}>What Should I do?</button>
+      <button onClick={onRemoveAll}>Remove All</button>
+      <ol>
+        {
+          app.options.map((option) => <li key={option}>{option}</li>)
+        }
+      </ol>
+      <form onSubmit={onFormSubmit}>
+        <input type="text" name="option" />
+        <button>Add Option</button>
+      </form>
+    </div>
+  );
 
+  ReactDOM.render(template, appRoot);
+};
+
+render();
