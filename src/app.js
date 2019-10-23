@@ -4,12 +4,13 @@ class IndecisionApp extends React.Component{ //parent component
     render() {
         const title = 'Indecision'
         const subtitle = 'Put your life in the hands of the computer'
+        const options = ['One','Two']
         return (
             <div>
             <Header title={title} subtitle={subtitle} />
             <Action />
-            <Options />
-            <AddOption />
+            <Options options={options} />
+            <AddOption options={options} />
             </div>
         )
     }
@@ -28,16 +29,31 @@ class Header extends React.Component  { //with react components uppercase is req
 }
 
 class Action extends React.Component {
+    handlePick()
+    {
+
+    }
+
     render(){
-        return <button>What Should I Do</button>
+        return <button onClick={this.handlePick}>What Should I Do</button>
     }
 }
 class Options extends React.Component {
+    handleRemoveAll()
+    {
+
+    }
     render(){
         return (
             <div>
-            <p>Options Component</p>
-            <Option />
+            <p>{this.props.options.length}</p>
+            
+            {
+                this.props.options.map((option) => <Option key={option} optionText={option} />)
+            }
+            {/* setting key is mandatory but key is reserved so not gonna be avaliable down below*/}
+           {/* <Option length={this.props.options.length} /> */}
+           <button onClick={this.handleRemoveAll}>RemoveAll</button>
             </div>
         )
     }
@@ -47,17 +63,32 @@ class Option extends React.Component {
     render() {
         return (
             <div>
-            <p>Option 1</p>
+            <p>{this.props.optionText}</p>
+            
             </div>
         )
     }
 }
 
 class AddOption extends React.Component {
+    handleAddOption(e)
+    {
+        e.preventDefault()
+        const option = e.target.elements.option.value.trim()
+        if(option)
+        {
+            this.props.options.push(option)
+            e.target.elements.option.value= ''
+        }
+        
+    }
     render() {
         return (
             <div>
-            <p>Add Options</p>
+            <form onSubmit={this.handleAddOption}>
+            <input type="text" name="option"></input>
+            <button>Submit</button>
+            </form>
             </div>
             )
     }
