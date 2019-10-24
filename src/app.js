@@ -39,6 +39,12 @@ class Action extends React.Component {
     }
 }
 class Options extends React.Component {
+    // we will override the constutor fn for ReactComponent to bind at initialise as its efficeint as it runs once only
+    constructor (props) {
+        super(props)
+        this.handleRemoveAll = this.handleRemoveAll.bind(this)
+    }
+
     handleRemoveAll()
     {
 
@@ -53,7 +59,9 @@ class Options extends React.Component {
             }
             {/* setting key is mandatory but key is reserved so not gonna be avaliable down below*/}
            {/* <Option length={this.props.options.length} /> */}
-           <button onClick={this.handleRemoveAll}>RemoveAll</button>
+        <button onClick={this.handleRemoveAll}>RemoveAll</button> {/*one of the places where we can call bind*/}
+        {/*<button onClick={this.handleRemoveAll.bind(this)}>RemoveAll</button> {one of the places where we can call bind */}
+
             </div>
         )
     }
@@ -71,6 +79,11 @@ class Option extends React.Component {
 }
 
 class AddOption extends React.Component {
+constructor (props) {
+    super(props)
+    this.handleAddOption = this.handleAddOption.bind(this)
+}
+
     handleAddOption(e)
     {
         e.preventDefault()
@@ -78,6 +91,7 @@ class AddOption extends React.Component {
         if(option)
         {
             this.props.options.push(option)
+            
             e.target.elements.option.value= ''
         }
         
