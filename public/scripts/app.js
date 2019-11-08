@@ -29,14 +29,38 @@ var Counter = function (_React$Component) {
     _createClass(Counter, [{
         key: 'handleAddOne',
         value: function handleAddOne() {
-            this.state.count++;
+            this.state.count = this.state.count + 1; //it doesnt work as manually updating the value of object happens but 
+            this.setState(function (prevState) //specialised method for setting up state
+            {
+                return {
+                    count: prevState.count + 1
+                };
+            });
         }
     }, {
         key: 'handleMinusOne',
-        value: function handleMinusOne() {}
+        value: function handleMinusOne() {
+            this.setState(function (prevState) //specialised method for setting up state
+            {
+                return {
+                    count: prevState.count - 1
+                };
+            });
+        }
     }, {
         key: 'handleReset',
-        value: function handleReset() {}
+        value: function handleReset() {
+            //     this.setState((prevState) => //specialised method for setting up state
+            // {
+            //     return {
+            //         count: 0
+            //     }
+
+            // })
+            this.setState({
+                count: this.state.count + 1
+            });
+        }
     }, {
         key: 'render',
         value: function render() {

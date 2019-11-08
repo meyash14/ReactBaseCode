@@ -1,5 +1,4 @@
 
-
 class Counter extends React.Component {
     
     constructor (props)   
@@ -17,7 +16,7 @@ class Counter extends React.Component {
     
     handleAddOne ()
 {
-    //this.state.count = this.state.count + 1 it doesnt work as manually updating the value of object happens but 
+    this.state.count = this.state.count + 1 //it doesnt work as manually updating the value of object happens but 
     this.setState((prevState) => //specialised method for setting up state
     {
         return {
@@ -25,6 +24,7 @@ class Counter extends React.Component {
         }
         
     })
+    
 }    
     handleMinusOne ()
     {
@@ -39,12 +39,15 @@ class Counter extends React.Component {
 
     handleReset()
     {   
-        this.setState((prevState) => //specialised method for setting up state
-    {
-        return {
-            count: 0
-        }
+    //     this.setState((prevState) => //specialised method for setting up state
+    // {
+    //     return {
+    //         count: 0
+    //     }
         
+    // })
+    this.setState ({
+        count  :this.state.count + 1
     })
     }
       render() {
