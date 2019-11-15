@@ -1,16 +1,34 @@
 class IndecisionApp extends React.Component{ //parent component
-   
-
+   constructor(props)
+   {
+       super(props) 
+       this.state = {
+           options : ['One','Two']
+       }
+       this.handleDeleteOptions = this.handleDeleteOptions.bind(this) //binding so as to access things inside this method
+   }
+    handleDeleteOptions ()
+    {   
+        this.setState ((prevState) => //prevstate not needed
+        {
+            return {
+                     options: []
+                   }
+        })
+    }
     render() {
         const title = 'Indecision'
         const subtitle = 'Put your life in the hands of the computer'
-        const options = ['One','Two']
+       // const options = ['One','Two']
         return (
             <div>
             <Header title={title} subtitle={subtitle} />
-            <Action />
-            <Options options={options} />
-            <AddOption options={options} />
+            <Action hasOptions = {this.state.options.length > 0} />
+            <Options 
+                    options={this.state.options} 
+                    handleDeleteOptions = {this.handleDeleteOptions}
+            />
+            <AddOption options={this.state.options} />
             </div>
         )
     }
@@ -35,20 +53,28 @@ class Action extends React.Component {
     }
 
     render(){
-        return <button onClick={this.handlePick}>What Should I Do</button>
+        return (
+            <button 
+                 onClick={this.handlePick}
+                 disabled= {!this.props.hasOptions}
+            >
+                What Should I Do
+            </button>
+        )
     }
 }
 class Options extends React.Component {
     // we will override the constutor fn for ReactComponent to bind at initialise as its efficeint as it runs once only
-    constructor (props) {
-        super(props)
-        this.handleRemoveAll = this.handleRemoveAll.bind(this)
-    }
+    // constructor (props) {
+    //     super(props)
+    //     this.handleRemoveAll = this.handleRemoveAll.bind(this)
+    // }
 
-    handleRemoveAll()
-    {
+    // handleRemoveAll()
+    // {
+       
+    // }
 
-    }
     render(){
         return (
             <div>
@@ -59,7 +85,7 @@ class Options extends React.Component {
             }
             {/* setting key is mandatory but key is reserved so not gonna be avaliable down below*/}
            {/* <Option length={this.props.options.length} /> */}
-        <button onClick={this.handleRemoveAll}>RemoveAll</button> {/*one of the places where we can call bind*/}
+        <button onClick={this.props.handleDeleteOptions}>RemoveAll</button> {/*one of the places where we can call bind*/}
         {/*<button onClick={this.handleRemoveAll.bind(this)}>RemoveAll</button> {one of the places where we can call bind */}
 
             </div>

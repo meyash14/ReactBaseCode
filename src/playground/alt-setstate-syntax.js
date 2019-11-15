@@ -37,7 +37,7 @@ class Counter extends React.Component {
     })
     }
 
-    handleReset()
+    handleReset()  
     {   
     //     this.setState((prevState) => //specialised method for setting up state
     // {
@@ -46,9 +46,15 @@ class Counter extends React.Component {
     //     }
         
     // })
+    // in the following syntax if do add say to 10 and then add 1 in the current state it goes to 11.React renders only whats changed for min render using Virtual DOM and thus 
+    // this.setState count 0 although makes it zero it doesnt get used in this.state.count as it uses prev state being 10. 
+    this.setState ({
+        count : 0
+    })
     this.setState ({
         count  :this.state.count + 1
     })
+
     }
       render() {
         
